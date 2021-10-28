@@ -7,9 +7,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 @RepositoryRestResource
-public interface PackageRepository extends CrudRepository<Package, Long> {
+public interface ParcelRepository extends CrudRepository<Parcel, Long> {
 
-    List<Package> findByCustomerName(@Param("customerName") String customerName);
-
+        List<Parcel> findByCustomerName(@Param("customerName") String customerName);
 
 }
