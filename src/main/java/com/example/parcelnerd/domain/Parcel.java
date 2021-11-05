@@ -23,6 +23,7 @@ public class Parcel {
             this.orderDate = orderDate;
             this.address = address;
             this.customerName = customerName;
+            this.status = status;
         }
 
         public Long getId() {

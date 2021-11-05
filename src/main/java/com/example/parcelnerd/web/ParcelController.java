@@ -4,6 +4,7 @@ package com.example.parcelnerd.web;
 import com.example.parcelnerd.domain.Parcel;
 import com.example.parcelnerd.domain.ParcelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,7 @@ public class ParcelController {
 
     //Adding a new parcel (limited to Admin)
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/addparcel")
     public String addParcel(Model model) {
         model.addAttribute("parcel", new Parcel());
@@ -60,6 +62,7 @@ public class ParcelController {
     }
 
     //Delete parcel (Limited to Admin)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteParcel(@PathVariable("id") Long parcelId, Model model) {
         repository.deleteById(parcelId);
@@ -67,6 +70,7 @@ public class ParcelController {
     }
 
     //Update a parcel (Limited to Admin)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editParcel(@PathVariable("id") Long parcelId, Model model) {
         model.addAttribute("parcel", repository.findById(parcelId));

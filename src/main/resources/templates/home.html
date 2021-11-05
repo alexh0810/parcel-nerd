@@ -2,14 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Parcel List</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
-          th:href="@{css/bootstrap.min.css}" />
+          th:href="@{css/bootstrap.min.css}"/>
 </head>
 <body>
 <div class="container">
     <div class="col-md-4">
         <h1>Parcel in Delivery</h1>
+    </div>
+    <div class="col-md-4">
+        <h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+    </div>
+    <div class="col-md-4" style="padding: 20px 0">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+        </form>
     </div>
     <table class="table table-striped">
         <tr>
@@ -17,18 +25,21 @@
             <th>Order Date</th>
             <th>Address</th>
             <th>Customer Name</th>
+            <th>Status</th>
         </tr>
         <tr th:each="parcel : ${parcels}">
             <td th:text="${parcel.productName}"></td>
             <td th:text="${parcel.orderDate}"></td>
             <td th:text="${parcel.address}"></td>
             <td th:text="${parcel.customerName}"></td>
-            <td th:text="${parcel.status.status}"></td>
-            <td><a class="btn btn-xs btn-danger" th:href="@{/delete/{id}(id=${parcel.id})}">Delete</a></td>
-            <td><a class="btn btn-danger" th:href="@{/edit/{id}(id=${parcel.id})}">Edit</a></td>
+            <td th:text="${parcel.status}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-xs btn-danger"
+                                                         th:href="@{/delete/{id}(id=${parcel.id})}">Delete</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger"
+                                                         th:href="@{/edit/{id}(id=${parcel.id})}">Edit</a></td>
         </tr>
     </table>
-    <a class="btn btn-success" href="/addparcel">Add a new Parcel</a>
+    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-success" href="/addparcel">Add a new Parcel</a>
 </div>
 </body>
 </html>
