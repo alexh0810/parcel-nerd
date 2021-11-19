@@ -20,7 +20,7 @@ public class ParcelnerdApplication {
     }
 
     @Bean
-    public CommandLineRunner packageDemo(ParcelRepository repository, UserRepository urepository) {
+    public CommandLineRunner packageDemo(ParcelRepository repository) {
         return (args) -> {
         };
     }
