@@ -3,15 +3,19 @@ package com.example.parcelnerd.web;
 
 import com.example.parcelnerd.domain.Parcel;
 import com.example.parcelnerd.domain.ParcelRepository;
+import com.example.parcelnerd.domain.ParcelService;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +25,8 @@ public class ParcelController {
 
     @Autowired
     private ParcelRepository repository;
+    @Autowired
+    ParcelService parcelService;
 
     // Show all parcels in Thymeleaf template
 
@@ -63,7 +69,7 @@ public class ParcelController {
         return "redirect:home";
     }
 
-    //Delete parcel (Limited to Admin)
+    // Delete parcel (Limited to Admin)
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/deleteParcelAction/{id}", method = RequestMethod.GET)
     public String deleteParcel(@PathVariable("id") Long parcelId, Model model) {
@@ -71,7 +77,7 @@ public class ParcelController {
         return "redirect:../home";
     }
 
-    //Update a parcel (Limited to Admin)
+    // Update a parcel (Limited to Admin)
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/editParcelAction/{id}", method = RequestMethod.GET)
     public String editParcel(@PathVariable("id") Long parcelId, Model model) {
@@ -79,5 +85,19 @@ public class ParcelController {
         return "edit";
     }
 
+    @RequestMapping(value = "/exportParcelAction", method = RequestMethod.GET)
+    public void exportCSV(HttpServletResponse response) throws Exception {
+        // Set file name and content type
+        String filename = "parcels.csv";
+        response.setContentType("text/csv");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"");
+
+        // Create a CSV Writer
+
+        StatefulBeanToCsv<Parcel> writer = new StatefulBeanToCsvBuilder<Parcel>(response.getWriter())
+                .withOrderedResults(true).build();
+        // Write all employees to CSV file
+        writer.write(parcelService.fetchAll());
+    }
 
 }

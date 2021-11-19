@@ -1,6 +1,7 @@
 package com.example.parcelnerd.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.opencsv.bean.CsvBindByName;
 import org.apache.tomcat.jni.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,14 +13,20 @@ import java.time.LocalDateTime;
 public class Parcel {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
+        @CsvBindByName
         private Long id;
+        @CsvBindByName
         private String productName;
+        @CsvBindByName
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate orderDate;
+        @CsvBindByName
         private String address;
+        @CsvBindByName
         private String customerName;
         @Enumerated(EnumType.STRING)
         @Column(name = "Status")
+        @CsvBindByName
         private Status status;
 
         public Parcel() {}
