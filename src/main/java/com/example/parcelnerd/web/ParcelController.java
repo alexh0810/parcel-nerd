@@ -22,40 +22,42 @@ public class ParcelController {
     @Autowired
     private ParcelRepository repository;
 
+    // Show all parcels in Thymeleaf template
+
     @RequestMapping(value = {"/", "/home"})
     public String parcelList(Model model) {
         model.addAttribute("parcels", repository.findAll());
         return "home";
     }
 
-    //Restful service to get all parcels
-    @RequestMapping(value = "/parcels", method = RequestMethod.GET)
+    // Restful service to get all parcels
+    @RequestMapping(value = "api/getParcels", method = RequestMethod.GET)
     public @ResponseBody
     List<Parcel> parcelListRest() {
         return (List<Parcel>) repository.findAll();
     }
 
-    //Restful service to get parcel by ID
+    // Restful service to get parcel by ID
 
-    @RequestMapping(value = "/parcel/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "api/getParcelBy/{id}", method = RequestMethod.GET)
     public @ResponseBody
     Optional<Parcel> findParcelRest(@PathVariable("id") Long parcelId) {
         return repository.findById(parcelId);
 
     }
 
-    //Adding a new parcel (limited to Admin)
+    // Adding a new parcel (limited to Admin)
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/addparcel")
+    @RequestMapping(value = "/addParcelAction")
     public String addParcel(Model model) {
         model.addAttribute("parcel", new Parcel());
         return "addparcel";
     }
 
-    //Save parcel
+    // Save parcel
 
-    @RequestMapping(value ="/save", method = RequestMethod.POST)
+    @RequestMapping(value ="/saveParcelAction", method = RequestMethod.POST)
     public String save(Parcel parcel) {
         repository.save(parcel);
         return "redirect:home";
@@ -63,7 +65,7 @@ public class ParcelController {
 
     //Delete parcel (Limited to Admin)
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteParcelAction/{id}", method = RequestMethod.GET)
     public String deleteParcel(@PathVariable("id") Long parcelId, Model model) {
         repository.deleteById(parcelId);
         return "redirect:../home";
@@ -71,7 +73,7 @@ public class ParcelController {
 
     //Update a parcel (Limited to Admin)
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/editParcelAction/{id}", method = RequestMethod.GET)
     public String editParcel(@PathVariable("id") Long parcelId, Model model) {
         model.addAttribute("parcel", repository.findById(parcelId));
         return "edit";

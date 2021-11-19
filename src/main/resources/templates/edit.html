@@ -8,13 +8,13 @@
 <body>
 <h1>Edit Parcel</h1>
 <div>
-    <form th:object="${parcel}" th:action="@{/save}" action="#" method="post">
+    <form th:object="${parcel}" th:action="@{/saveParcelAction}" action="#" method="post">
         <input type="hidden" th:field="*{id}" id="id">
         <label for="productName">Product:</label>
         <input type="text" id="productName" th:field="*{productName}" />
         <div style="clear: both; display: block; height: 10px;"></div>
         <label for="orderDate">Order Date:</label>
-        <input type="text" id="orderDate" th:field="*{orderDate}" />
+        <input type="date" id="orderDate" th:field="*{orderDate}" />
         <div style="clear: both; display: block; height: 10px;"></div>
         <label for="address">Address:</label>
         <input type="text" id="address" th:field="*{address}" />

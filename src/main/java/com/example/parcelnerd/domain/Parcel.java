@@ -1,6 +1,12 @@
 package com.example.parcelnerd.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.tomcat.jni.Local;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Parcel {
@@ -8,7 +14,8 @@ public class Parcel {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Long id;
         private String productName;
-        private String orderDate;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate orderDate;
         private String address;
         private String customerName;
         @Enumerated(EnumType.STRING)
@@ -17,7 +24,7 @@ public class Parcel {
 
         public Parcel() {}
 
-        public Parcel(String productName, String orderDate, String address, String customerName, Status status) {
+        public Parcel(String productName, LocalDate orderDate, String address, String customerName, Status status) {
             super();
             this.productName = productName;
             this.orderDate = orderDate;
@@ -42,11 +49,11 @@ public class Parcel {
             this.productName = productName;
         }
 
-        public String getOrderDate() {
+        public LocalDate getOrderDate() {
             return orderDate;
         }
 
-        public void setOrderDate(String orderDate) {
+        public void setOrderDate(LocalDate orderDate) {
             this.orderDate = orderDate;
         }
 
