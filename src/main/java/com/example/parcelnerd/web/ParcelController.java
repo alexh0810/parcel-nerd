@@ -72,7 +72,7 @@ public class ParcelController {
 
     // Update a parcel (Limited to Admin)
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/e it/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editParcelAction(@PathVariable("id") Long parcelId, Model model) {
         model.addAttribute("parcel", repository.findById(parcelId));
         return "edit";
