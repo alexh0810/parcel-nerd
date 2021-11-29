@@ -8,7 +8,7 @@
 <body>
 <h1>Edit Parcel</h1>
 <div>
-    <form th:object="${parcel}" th:action="@{/saveParcelAction}" action="#" method="post">
+    <form th:object="${parcel}" th:action="@{/save}" action="#" method="post">
         <input type="hidden" th:field="*{id}" id="id">
         <label for="productName">Product:</label>
         <input type="text" id="productName" th:field="*{productName}" />

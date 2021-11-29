@@ -31,8 +31,6 @@ public class ParcelRepositoryTest {
         assertThat(parcels.get(0).getOrderDate()).isEqualTo(LocalDate.of(2021, 10, 13));
         assertThat(parcels.get(0).getAddress()).isEqualTo("Pakkamestarinkatu 1D 52, 00500, Helsinki");
 
-
-
     }
 
     @Test

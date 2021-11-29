@@ -34,13 +34,13 @@
             <td th:text="${parcel.customerName}"></td>
             <td th:text="${parcel.status}"></td>
             <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-xs btn-danger"
-                                                         th:href="@{/deleteParcelAction/{id}(id=${parcel.id})}">Delete</a></td>
+                                                         th:href="@{/delete/{id}(id=${parcel.id})}">Delete</a></td>
             <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger"
-                                                         th:href="@{/editParcelAction/{id}(id=${parcel.id})}">Edit</a></td>
+                                                         th:href="@{/edit/{id}(id=${parcel.id})}">Edit</a></td>
         </tr>
     </table>
-    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-success" href="/addParcelAction">Add a new Parcel</a>
-    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-success" href="/exportParcelAction">Export to CSV file</a>
+    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-success" href="/add">Add a new Parcel</a>
+    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-success" href="/export">Export to CSV file</a>
 </div>
 </body>
 </html>
